@@ -16,7 +16,7 @@ public class App_func_forgot_password extends Generic_function {
 	public static void browser_is_open() {
 		try{		
 
-			BrowserLaunch();
+			Browser_Launch();
 		}catch (IOException e) {
 			System.err.println("Caught IOException: " +  e.getMessage());
 		}	 
@@ -44,7 +44,7 @@ public class App_func_forgot_password extends Generic_function {
 	@Given("User get the validation message on entering less than ten digit phone number")
 	public void forgot_password_negative_tc_002() {
 		try {
-			driver.findElement(By.xpath(OR_reader("Object Locator1","phone_number"))).sendKeys(td_reader("phone_number",1,0));
+			driver.findElement(By.xpath(OR_reader("Object Locator1","phone_number"))).sendKeys(td_reader("phone_number",0));
 			driver.findElement(By.xpath(OR_reader("Object Locator1","send_reset_link"))).click();
 		    str= driver.findElement(By.xpath(OR_reader("Object Locator1","phone_number_val"))).getText();
 			Assert.assertEquals(str,"Phone number should be 10 digit number");
@@ -58,7 +58,7 @@ public class App_func_forgot_password extends Generic_function {
 	@Given("User get the validation message on entering more than ten digit phone number")
 	public void forgot_password_negative_tc_003() {
 		try {
-			driver.findElement(By.xpath(OR_reader("Object Locator1", "phone_number"))).sendKeys(td_reader("phone_number",1,1));
+			driver.findElement(By.xpath(OR_reader("Object Locator1", "phone_number"))).sendKeys(td_reader("phone_number",1));
 			driver.findElement(By.xpath(OR_reader("Object Locator1","send_reset_link"))).click();
 	        str= driver.findElement(By.xpath(OR_reader("Object Locator1","phone_number_val"))).getText();
 			Assert.assertEquals(str,"Phone number should be 10 digit number");
@@ -82,11 +82,11 @@ public class App_func_forgot_password extends Generic_function {
 	@Then("User should able to get a validation message on entering non registered phone number in the phone number field")
 	public void forgot_password_negative_tc_005() {
 		try {
-			driver.findElement(By.xpath(OR_reader("Object Locator1","phone_number"))).sendKeys(td_reader("phone_number",1,2));
+			driver.findElement(By.xpath(OR_reader("Object Locator1","phone_number"))).sendKeys(td_reader("phone_number",2));
 			driver.findElement(By.xpath(OR_reader("Object Locator1","send_reset_link"))).click();
 			str= driver.findElement(By.xpath(OR_reader("Object Locator1","phone_number_inv"))).getText();
 	        Assert.assertEquals(str,"Phone number doesn't exists");
-			driverClose();
+			browser_close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

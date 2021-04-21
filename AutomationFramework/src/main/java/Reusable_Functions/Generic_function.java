@@ -3,6 +3,8 @@ package Reusable_Functions;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
@@ -33,15 +35,36 @@ public class Generic_function {
 
 	/* Browser launching using driver that is specified in the config.properties file , navigating to Landing Welcome Page and returning driver object*/
 	public static void Browser_Launch() throws IOException {
+//		FileInputStream fileInput;
+//		fileInput = new FileInputStream(file);
+//		prop.load(fileInput);
+//			System.setProperty("webdriver.chrome.driver",getDriverPath());
+//			driver =new ChromeDriver();
+//			
+//			driver.navigate().to(getURL());	
+//			driver.manage().window().maximize();
+		
 		FileInputStream fileInput;
 		fileInput = new FileInputStream(file);
 		prop.load(fileInput);
-			System.setProperty("webdriver.chrome.driver",getDriverPath());
-			driver =new ChromeDriver();
-			driver.navigate().to(getURL());	
-			driver.manage().window().maximize();
+		System.setProperty("webdriver.chrome.driver",getDriverPath());
+		Map<String, Object> prefs = new HashMap<String, Object>();
+		//Pass the argument 1 to allow and 2 to block
+		prefs.put("profile.default_content_setting_values.notifications", 1);
+		ChromeOptions options = new ChromeOptions();
+		options.setExperimentalOption("prefs", prefs);
+		driver = new ChromeDriver(options);
+		driver.navigate().to(getURL());
+		driver.manage().window().maximize();
+
+		
+		
+		
 	}
 	
+	
+	
+
 	
 	/*To get test data iteration value from config.properties file*/
 	public static int Dataiter() {            
