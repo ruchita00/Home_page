@@ -1,9 +1,12 @@
 package Reusable_Functions;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +21,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -122,6 +126,23 @@ public class Generic_function {
 		driver.manage().timeouts().implicitlyWait(time,TimeUnit.SECONDS);
 	}
 	
+	
+	/*reuseable function of xpath*/
+	public static void reusable_xpath() throws Exception {		
+	
+		List<WebElement> elements=driver.findElements(By.xpath(OR_reader("Object_Locator", "common_one")));
+		Iterator<WebElement> itr = elements. iterator();
+		while(itr. hasNext()) {
+			String eleText=itr. next(). getText();
+		System. out. println(eleText);
+		if(eleText.equalsIgnoreCase("wallet")) {				     
+			
+		}	
+				
+		}
+	}
+	
+	
 	/* To find object locator value of a particular fieldname passing to this function by loading Excel workbook*/
 	public static  String OR_reader(String sheetname,String Fieldname) throws IOException  {
 		File src=new File(getFilepath());
@@ -156,6 +177,7 @@ public class Generic_function {
 		return td_value;
 	}
     
+	
 	/* To read test data value of a particular fieldname using index  where its values are seperated with a comma within cell in excel sheet  */
 	public static String td_reader(String fieldname,int index){
 		sheet = workbook.getSheetAt(0);

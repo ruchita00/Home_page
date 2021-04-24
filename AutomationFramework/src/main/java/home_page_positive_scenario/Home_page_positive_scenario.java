@@ -1,10 +1,13 @@
 package home_page_positive_scenario;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
@@ -12,8 +15,8 @@ import Reusable_Functions.Generic_function;
 import io.cucumber.java.en.*;
 
 public class Home_page_positive_scenario extends Generic_function {	
-	public static boolean value,str1;
-	
+	public static boolean value;
+
 	/*Browser is launching*/
 	@Given("Browser is open")
 	public static void browser_is_open() {
@@ -23,240 +26,227 @@ public class Home_page_positive_scenario extends Generic_function {
 			driver.findElement(By.xpath(OR_reader("Object_Locator", "login_phone_number"))).sendKeys(td_reader("login_phone_number",0));
 			browser_wait(4);		
 			driver.findElement(By.xpath(OR_reader("Object_Locator", "login_password"))).sendKeys(td_reader("login_password",0));
+			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "logout1"))).isDisplayed();
+			Assert.assertEquals(true,value);
 			click("logout1");
-			browser_wait(4);
-			//value = driver.findElement(By.xpath(OR_reader("Object_Locator", "logout1"))).isDisplayed();
-			//Assert.assertEquals(true,value);			
+			browser_wait(5);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	 
 	}	
 
-	/*TC_001 User is navigated to the payment manage page on clicking wallet tab */
-	@Then("User is navigated to the payment manage page on clicking wallet tab")
-	public static void home_page_positive_scenario_tc_001() {
-		try {
-			click("utilities");
-			browser_wait(5);
-			click("wallet");
-//			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "wallet"))).isDisplayed();
-//			Assert.assertEquals(true,value);
-     		driver.navigate().back();
-     		browser_wait(5);
+	@Then("user is navigated to the tabs on clicking any tab")
+	public void user_is_navigated_to_the_tabs_on_clicking_any_tab() throws Exception {
 			
-			browser_wait(5);			
-			click("side_arrow");
-			click("home");
-
+			System.out.println("print1");
+			//String str= OR_reader("Object_Locator", "common_one");
+			boolean stopflag=false;
+			boolean walletflag=false;
+			boolean billsflag=false;
+			boolean awardPointsflag=false;
 			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-/*TC_002 User is navigated to the bills page on the clicking bills tab */
-	@Then("User is navigated to the bills page on the clicking bills tab")
-	public void home_page_positive_scenario_tc_002() {
-		
-
-		try {
-			click("bills");
-			str1= driver.findElement(By.xpath(OR_reader("Object Locator2","bills"))).isDisplayed();
-
-			Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
-
-	}
-
-	/*TC_003 User is able to click on the claims tab */
-	@Given("User is able to click on the claims tab")
-	public void home_page_positive_scenario_tc_003() {
-		//driver.navigate().back();
-
-		try {
-			click("claims");
-			str1= driver.findElement(By.xpath(OR_reader("Object Locator2","claims"))).isDisplayed();
-			Assert.assertEquals(true, str1);
-	} catch (IOException e) {
-			e.printStackTrace();
-		}	
-	}
-
-
-	/*TC_004 User is on the home page on clicking home tab*/ 
-	@Given("User is on the home page on clicking home tab")
-	public void home_page_positive_scenario_tc_004() {
-		//driver.navigate().back();
-		try {
-			click("home");
-			str1= driver.findElement(By.xpath(OR_reader("Object Locator2","home"))).isDisplayed();
-			Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-	/*TC_005 User is navigated to the services page on clicking services tab*/
-	@Then("User is navigated to the services page on clicking services tab")
-	public void home_page_positive_scenario_tc_005() {
-		//driver.navigate().back();
-		try {
-			click("services");
-			//str1= driver.findElement(By.xpath(OR_reader("Object Locator2","services"))).isDisplayed();
-			//Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/*TC_006 User is navigated to the circles page on clicking circles tab*/
-	@Then("User is navigated to the circles page on clicking circles tab")
-	public void home_page_positive_scenario_tc_006(){
-		//driver.navigate().back();
-		try {
-			click("circles");
-			//str1= driver.findElement(By.xpath(OR_reader("Object Locator2","circles"))).isDisplayed();
-			//Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();	
-
-		}}
-
-	/*TC_007 User is navigated to the Utilities page on clicking utilities tab*/
-	@Then("User is navigated to the Utilities page on clicking utilities tab")
-	public void home_page_positive_scenario_tc_007(){
-		//driver.navigate().back();
-		try {
-			click("utilities");
+			 
+			List<WebElement> elements=driver.findElements(By.xpath("//span[@class='MuiBadge-root']//p"));
+			int eleSize = elements.size();
+			System.out.println("Element size is"+eleSize );
 			
-			//str1= driver.findElement(By.xpath(OR_reader("Object Locator2","utilities"))).isDisplayed();
-			//Assert.assertEquals(true, str1);
-	} catch (IOException e) {
-			e.printStackTrace();	
-
-		}
-	}
-
-	/*TC_008 User is navigated to the award points page on clicking award points tab*/
-	@Then("User is navigated to the award points page on clicking award points tab")
-	public void home_page_positive_scenario_tc_008(){
-		//driver.navigate().back();
-		try {
-			click("utilities");
-			browser_wait(4);
-			click("award_points");
-			browser_wait(4);
-			click("side_arrow");
-			click("home");
-			//str1= driver.findElement(By.xpath(OR_reader("Object Locator2","award_points"))).isDisplayed();
-			//Assert.assertEquals(true, str1);
+			System.out.println("print2");
+			Iterator<WebElement> itr = elements. iterator();
+			System.out.println("print3");
 			
-		} catch (IOException e) {
-			e.printStackTrace();	
-		}
+			WebElement wb = itr.next();
+						
+				System.out.println("print4");
+				String eleText=wb.getText();
+			System. out. println(eleText);
+			
+			int whilecounter = 0;
+			
+			do
+			{
+				driver.navigate().refresh();
+				
+				browser_wait(10);
+				
+				elements=driver.findElements(By.xpath("//span[@class='MuiBadge-root']//p"));
+				itr = elements. iterator();
+				wb = itr.next();
+				eleText=wb.getText();
+				
+				if(eleText.equalsIgnoreCase("wallet"))
+				{
+				
+					if(walletflag==false)
+					{
+					
+						click("wallet");
+						value = driver.findElement(By.xpath(OR_reader("Object_Locator", "wallet_page"))).isDisplayed();
+						Assert.assertEquals(true,value,"wallet test case passed");	
+						System.out.println("wallet test case passed");
+						walletflag=true;
+						whilecounter++;
+						click("home");
+						browser_wait(5); 
 
+					
+					}
+					else
+					{	
+						wb = itr.next();
+						eleText=wb.getText();
+					}
+				
+				}
+				else if(eleText.equalsIgnoreCase("bills"))
+				{
+					if( billsflag==false)
+					{
+						click("bills");
+						value = driver.findElement(By.xpath(OR_reader("Object_Locator", "bills_page"))).isDisplayed();
+						Assert.assertEquals(true,value,"bills test case passed");
+						System.out.println("bill test case passed");
+						billsflag=true;
+						whilecounter++;
+						System.out.println("While couner is "+whilecounter);
+						click("home");  
+						browser_wait(5);
+						
+					}
+					else
+					{
+						wb = itr.next();
+						eleText=wb.getText();
+							
+					}
 
-	}
-
-	/*TC_009 User is navigated to the second opinion page on clicking request for second opinion button*/
-	@Then("User is navigated to the second opinion page on clicking request for second opinion button")
-	public void home_page_positive_scenario_tc_009(){
-		//driver.navigate().back();
-		try {
-			click("request_for_second_opinion");
-			str1= driver.findElement(By.xpath(OR_reader("Object Locator2","request_for_second_opinion"))).isDisplayed();
-			Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();	
-
-		}
-
-	}
-
-	/*TC_010 User is navigated to the refer a friend page on clicking refer a friend button*/
-	@Then("User is navigated to the refer a friend page on clicking refer a friend button")
-	public void home_page_positive_scenario_tc_010() {
-		//driver.navigate().back();
-		try {
-			click("refer_a_friend");
-			str1= driver.findElement(By.xpath(OR_reader("Object Locator2","refer_a_friend"))).isDisplayed();
-			Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();	
-
-		}
-
-
-	}
+				}
+				else if(eleText.equalsIgnoreCase("award points"))
+				{
+				
+					if(awardPointsflag==false)
+					{
+						click("award_points");
+						value = driver.findElement(By.xpath(OR_reader("Object_Locator", "award_points_page"))).isDisplayed();
+						Assert.assertEquals(true,value,"award points test case passed");
+						System.out.println("award points test case passed");
+						awardPointsflag=true;
+						whilecounter++;
+						System.out.println("While couner is "+whilecounter);
+						click("home");  
+						browser_wait(5);
+						
+					}
+					else
+					{
+						wb = itr.next();
+							eleText=wb.getText();
+					}
+				}
+			}
+			while(whilecounter <eleSize );
+				
+			}								
 	
-
-
-	/*TC_011 User is navigated to the help page on clicking help tab*/
-	@Then("User is navigated to the help page on clicking help tab")
-	public void home_page_positive_scenario_tc_011(){
-		//driver.navigate().back();
-		try {
-			click("help");
-			str1= driver.findElement(By.xpath(OR_reader("Object Locator2","help"))).isDisplayed();
-			Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();	
-
-		}
-}
-	/*TC_012 User is navigated to the  your alerts page on clicking your alerts tab*/
-	@Then("User is navigated to the  your alerts page on clicking your alerts tab")
-	public void home_page_positive_scenario_tc_012() {
-		//driver.navigate().back();
-		try {
-			click("your_alerts");
-			str1= driver.findElement(By.xpath(OR_reader("Object Locator2","your_alerts"))).isDisplayed();
-			Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-		e.printStackTrace();	
-
-		}
-
-
 	}
 
-	/*TC_013 User is able to click on the drop down tab*/
-	@Given("User is able to click on the drop down tab")
-	public void home_page_positive_scenario_tc_013(){
-		//driver.navigate().back();
-		try {
-			click("drop_down");
-		str1= driver.findElement(By.xpath(OR_reader("Object Locator2","drop_down"))).isDisplayed();
-			Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();	
+//
+//	/*TC_001 User is navigated to the payment manage page on clicking wallet tab */
+//	@Then("User is navigated to the tabs on clicking any tab")
+//	public static void home_page_positive_scenario_tc_00() {
+//		try {			
+//			List<WebElement> elements=driver.findElements(By.xpath(OR_reader("Object_Locator", "common_one")));
+//			Iterator<WebElement> itr = elements. iterator();
+//			while(itr. hasNext()) {
+//				String eleText=itr. next(). getText();
+//			System. out. println(eleText);
+//			if(eleText.equalsIgnoreCase("wallet")) {
+//				click("wallet");
+//				value = driver.findElement(By.xpath(OR_reader("Object_Locator", "wallet_page"))).isDisplayed();
+//				Assert.assertEquals(true,value,"wallet test case passed");	
+//				click("home");
+//				browser_wait(5);   
+//				
+//			}
+//			else if(eleText.equalsIgnoreCase("bills")) {
+//				click("bills");
+//				value = driver.findElement(By.xpath(OR_reader("Object_Locator", "bills_page"))).isDisplayed();
+//				Assert.assertEquals(true,value,"bills test case passed");
+//				click("home");  
+//				browser_wait(5);			
+//
+//			}
+//			else if(eleText.equalsIgnoreCase("award points")) {
+//				click("award_points");
+//				value = driver.findElement(By.xpath(OR_reader("Object_Locator", "award_points_page"))).isDisplayed();
+//				Assert.assertEquals(true,value,"award points test case passed");
+//				click("home");  
+//				browser_wait(5);
+//			}	
+//				
+//			}								
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+////
+//
+//	
+//	
+//	
+//	
+//	/*TC_001 User is navigated to the payment manage page on clicking wallet tab */
+//	@Then("User is navigated to the payment manage page on clicking wallet tab")
+//	public static void home_page_positive_scenario_tc_001() {
+//		try {			
+//			click("wallet");
+//			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "wallet_page"))).isDisplayed();
+//			Assert.assertEquals(true,value);	
+//			click("home");
+//			browser_wait(5);							
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	/*TC_002 User is navigated to the bills page on the clicking bills tab */
+//	@Then("User is navigated to the bills page on the clicking bills tab")
+//	public void home_page_positive_scenario_tc_002() {
+//		try {	
+//			click("bills");
+//			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "bills_page"))).isDisplayed();
+//			Assert.assertEquals(true,value);
+//			click("home");  
+//			browser_wait(5);				
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}	
+//	}
+//
+//	/*TC_003 User is navigated to the award points page on clicking award points tab*/
+//	@Then("User is navigated to the award points page on clicking award points tab")
+//	public void home_page_positive_scenario_tc_003() {
+//		try {	
+//			click("award_points");
+//			value = driver.findElement(By.xpath(OR_reader("Object_Locator", "award_points_page"))).isDisplayed();
+//			Assert.assertEquals(true,value);
+//			click("home");  
+//			browser_wait(5);				
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}	
+//	}
 
-		}
-
-}
 
 
-	/*TC_014 User is able to logout on clicking on the logout button*/
-	@Then("User is able to logout on clicking on the logout button")
-	public void home_page_positive_scenario_tc_014(){
-		//driver.navigate().back();
-		try {
-			click("logout_home");
-			str1= driver.findElement(By.xpath(OR_reader("Object Locator2","logout_home"))).isDisplayed();
-			Assert.assertEquals(true, str1);
-		} catch (IOException e) {
-			e.printStackTrace();	
-		}
 
-	}
 
-	/*TC_015 User is navigated to the login page  from Home page on clicking the browser back option*/
-	@Then("User is navigated to the login page  from Home page on clicking the browser back option")
-	public void home_page_positive_scenario_tc_015(){
-		driver.navigate().back();
-		browser_close();
+//Scenario: Validate that the user is navigated to the payment manage page on clicking wallet tab
+//Given Browser is open 
+//Then User is navigated to the payment manage page on clicking wallet tab
+//
+//Scenario: Validate that the user is navigated to the bills page on clicking bills tab  
+//Then User is navigated to the bills page on the clicking bills tab
+//
+//Scenario: Validate that the user is navigated to the award points page on clicking award points tab
+//Then User is navigated to the award points page on clicking award points tab
 
-}
-}
